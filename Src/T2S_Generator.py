@@ -7,7 +7,8 @@ from google.cloud import texttospeech
 import os
 import sys, getopt
 
-credential_path = "C:/Users/miph272640/PycharmProjects/VocalSoft/woven-bonbon-325609-21984ad9f107.json"
+#TODO: rename file name (python, credential) and change to same folder then fetch the credential using relative path
+credential_path = "GGT2S_credential.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 # SSML file name syntax = 000_Cover_<ExcelFile>_TL_VQ_G.ssml
@@ -72,7 +73,7 @@ def parseAgrvs(argv):
    try:
       opts, args = getopt.getopt(argv,"i:o:")
    except getopt.GetoptError:
-      print('test_T2S.py -i <inputPath> -o <outputPath>')
+      print('T2S_Generator.py -i <inputPath> -o <outputPath>')
       sys.exit(2)
 
    #print(opts, args)
