@@ -7,8 +7,8 @@ from google.cloud import texttospeech
 import os
 import sys, getopt
 
-#TODO: rename file name (python, credential) and change to same folder then fetch the credential using relative path
-credential_path = "GGT2S_credential.json"
+dir_name = os.path.dirname(__file__)
+credential_path = os.path.join(dir_name, "GGT2S_credential.json")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 # SSML file name syntax = 000_Cover_<ExcelFile>_TL_VQ_G.ssml
@@ -113,7 +113,7 @@ def GGT2S_ProcessFolder(inFolderPath, outFolderPath):
             # Create output file path
             fName_wo_extension = os.path.splitext(filename)[0]
             outputFileName = fName_wo_extension + '.mp3'
-            outputFilePath = os.path.join(inFolderPath, outputFileName)
+            outputFilePath = os.path.join(outFolderPath, outputFileName)
 
             # Get audio setting
             targetLanguage, languageName, voiceGender = getAudioSettingFromFileName(fName_wo_extension)
