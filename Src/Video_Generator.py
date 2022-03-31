@@ -3,6 +3,8 @@ import sys, getopt
 import glob
 import moviepy.editor as mpy
 
+WRITE_SINGLE_VIDEO_FILE = False
+
 def parseAgrvs(argv):
    inputPicturePath = ''
    inputAudioPath = ''
@@ -64,7 +66,9 @@ def VideoGen_ProcessFolder(inPictrureFolderPath, inAudioFolderPath, outFolderPat
                     clip = mpy.ImageClip(inputPictureFilePath).set_duration(audio.duration)
 
                     clip = clip.set_audio(audio)
-                    clip.write_videofile(outputVideoFilePath, fps=10)
+
+                    if WRITE_SINGLE_VIDEO_FILE:
+                        clip.write_videofile(outputVideoFilePath, fps=10)
 
                     clips.append(clip)
 
@@ -79,9 +83,9 @@ def VideoGen_ProcessFolder(inPictrureFolderPath, inAudioFolderPath, outFolderPat
     finalVideoFilePath = os.path.join(outFolderPath, finalVideoFileName)
 
     # concatenating all the clips
-    final = mpy.concatenate_videoclips(clips)
+    final = mpy.concatenate_videoclips(clips, method="compose")
     # writing the video into a file / saving the combined video
-    final.write_videofile(finalVideoFilePath, fps=10)
+    final.write_videofile(finalVideoFilePath, fps=30)
 
 
 # Press the green button in the gutter to run the script.
