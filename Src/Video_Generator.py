@@ -28,9 +28,19 @@ def parseAgrvs(argv):
 
    return inputPicturePath, inputAudioPath, outputPath
 
+def VideoGen_trimFileName(longName):
+
+    # Trim 000_Cover_<FileName> or xxx_Vocal_<FileName> to <FileName>
+    shortName = longName[10:]
+
+    return shortName
+
 def VideoGen_ProcessFolder(inPictrureFolderPath, inAudioFolderPath, outFolderPath):
 
     clips = []
+
+    finalVideoFileName = ""
+    gotFinalFileName = False
 
     for filename in os.listdir(inPictrureFolderPath):
         if filename.endswith(".jpeg"):
@@ -39,6 +49,12 @@ def VideoGen_ProcessFolder(inPictrureFolderPath, inAudioFolderPath, outFolderPat
             inputPictureFilePath = os.path.join(inPictrureFolderPath, filename)
 
             fName_wo_extension = os.path.splitext(filename)[0]
+
+            # To create final video file name
+            if (gotFinalFileName == False):
+                finalVideoFileName = VideoGen_trimFileName(fName_wo_extension)
+                gotFinalFileName = True
+
 
             # Check if audio file with partial name exists
             partialAudioFileName = fName_wo_extension + "*.mp3"
@@ -79,7 +95,7 @@ def VideoGen_ProcessFolder(inPictrureFolderPath, inAudioFolderPath, outFolderPat
 
     # Merge mp4 files
 
-    finalVideoFileName = "FinalVideo" + ".mp4"
+    finalVideoFileName = finalVideoFileName + ".mp4"
     finalVideoFilePath = os.path.join(outFolderPath, finalVideoFileName)
 
     # concatenating all the clips
